@@ -16,7 +16,7 @@ export default class Pet extends Model {
 		type: DataType.UUID,
 		defaultValue: DataType.UUIDV4,
 	})
-	petId!: number;
+	petId!: string;
 
 	@Column(DataType.STRING)
 	nome!: string;

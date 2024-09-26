@@ -69,7 +69,6 @@ class TutorController {
 				id: user?.id
 			}, secret);
 			res.status(StatusCodes.OK).json(token);
-
 		}
 		catch(err){
 			res.status(StatusCodes.INTERNAL_SERVER_ERROR).json('Não foi possível logar!')
