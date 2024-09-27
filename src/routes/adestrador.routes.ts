@@ -10,4 +10,6 @@ router.get('/:id', adestradorController.getAdestradorByPk);
 
 router.post('/', checkExistsUserEmail, adestradorController.createAdestrador);
 
+router.delete('/:id', adestradorController.removeAdestradorByPk);
+
 export default router;

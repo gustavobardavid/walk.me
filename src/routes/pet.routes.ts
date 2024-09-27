@@ -11,4 +11,6 @@ router.get('/tutor/:id', petController.getPetsByTutorId);
 
 router.post('/', petController.createPet);
 
+router.delete('/:id', petController.removePetByPk);
+
 export default router;

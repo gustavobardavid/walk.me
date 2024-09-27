@@ -10,4 +10,6 @@ router.get('/:id', tutorController.getTutorByPk);
 
 router.post('/', checkExistsUserEmail, tutorController.createTutor);
 
+router.delete('/:id', tutorController.removeTutorByPk);
+
 export default router;

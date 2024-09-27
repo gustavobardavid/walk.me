@@ -15,4 +15,6 @@ router.get('/adestrador', anuncioController.getAnunciosAdestrador);
 
 router.get('/passeador', anuncioController.getAnunciosPasseador);
 
+router.delete('/:id', anuncioController.removeAnuncioByPk);
+
 export default router;

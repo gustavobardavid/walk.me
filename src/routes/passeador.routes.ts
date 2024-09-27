@@ -10,4 +10,6 @@ router.get('/:id', passeadorController.getPasseadorByPk);
 
 router.post('/', checkExistsUserEmail, passeadorController.createPasseador);
 
+router.delete('/:id', passeadorController.removePasseadorByPk);
+
 export default router;
