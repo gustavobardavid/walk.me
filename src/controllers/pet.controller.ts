@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import PetService from '../services/pet.service';
 import { StatusCodes } from 'http-status-codes';
 
+
 class PetController {
 	public async getAllPets(req: Request, res: Response): Promise<void> {
 		try {

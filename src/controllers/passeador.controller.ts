@@ -4,8 +4,22 @@ import { StatusCodes } from 'http-status-codes';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken';
+import { z } from 'zod';
 dotenv.config();
 const secret = process.env.SECRET || ' ' ;
+
+// Definindo esquemas de validação com Zod
+const createSchema = z.object({
+    nome: z.string().min(1, "Nome é obrigatório"),
+    email: z.string().email("Email inválido"),
+    senha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+	disponibilidade: z.string().min(1, "Disponibilidade é obrigatória")
+});
+
+const loginSchema = z.object({
+    email: z.string().email("Email inválido"),
+    senha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+});
 class PasseadorController {
 	public async getAllPasseadors(req: Request, res: Response): Promise<void> {
 		try {
@@ -26,8 +40,14 @@ class PasseadorController {
 	}
 
 	public async createPasseador(req: Request, res: Response): Promise<void> {
+		// Validação do corpo da requisição
+		const parsed = createSchema.safeParse(req.body);
+		if (!parsed.success) {
+			res.status(StatusCodes.BAD_REQUEST).json(parsed.error.format());
+			return;
+		}
 		try {
-			const { nome, email, disponibilidade, senha } = req.body;
+			const { nome, email, disponibilidade, senha } = parsed.data;
 			const salt = await bcrypt.genSalt();
 			const hashSenha = await bcrypt.hash(senha, salt)
 			const Passeador = await PasseadorService.createPasseador(
@@ -62,7 +82,13 @@ class PasseadorController {
 	}
 
 	public async loginPasseador(req:Request, res:Response): Promise<void>{
-		const {email, senha} = req.body;
+		// Validação do corpo da requisição
+		const parsed = loginSchema.safeParse(req.body);
+		if (!parsed.success) {
+			res.status(StatusCodes.BAD_REQUEST).json(parsed.error.format());
+			return;
+		}
+		const {email, senha} = parsed.data;
 		const user = await PasseadorService.getPasseadorByEmail(email);
 		if(!user){
 			res.status(StatusCodes.NOT_FOUND).json("Email não encontrado!")
