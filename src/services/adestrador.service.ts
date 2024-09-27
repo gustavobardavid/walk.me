@@ -22,16 +22,31 @@ class AdestradorService {
 		return Adestrador.create({ nome, email, especialidade, senha });
 	}
 
+	public async updateAdestradorByPk(
+		id: string,
+		nome: string,
+		email: string,
+		especialidade: string,
+		senha: string
+	) {
+		return Adestrador.update(
+			{ nome, email, especialidade, senha },
+			{
+				where: { adestradorId: id },
+			}
+		);
+	}
+
 	public async removeAdestradorByPk(id: string) {
 		return Adestrador.destroy({
 			where: { adestradorId: id },
 			cascade: true,
 		});
 	}
-	public async getAdestradorByEmail(email:string){
+	public async getAdestradorByEmail(email: string) {
 		return Adestrador.findOne({
-			where: {email:email},
-		})
+			where: { email: email },
+		});
 	}
 }
 

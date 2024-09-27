@@ -17,20 +17,31 @@ class TutorService {
 		return Tutor.create({ nome, email, senha });
 	}
 
+	public async updateTutorByPk(
+		id: string,
+		nome: string,
+		email: string,
+		senha: string
+	) {
+		return Tutor.update(
+			{ nome, email, senha },
+			{
+				where: { tutorId: id },
+			}
+		);
+	}
+
 	public async removeTutorByPk(id: string) {
 		return Tutor.destroy({
 			where: { tutorId: id },
 			cascade: true,
 		});
 	}
-	public async getTutorByEmail(email:string){
+	public async getTutorByEmail(email: string) {
 		return Tutor.findOne({
-			where: {email:email},
-		})
+			where: { email: email },
+		});
 	}
-
 }
-
-
 
 export default new TutorService();

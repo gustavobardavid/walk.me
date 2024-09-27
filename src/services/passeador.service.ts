@@ -22,16 +22,31 @@ class PasseadorService {
 		return Passeador.create({ nome, email, disponibilidade, senha });
 	}
 
+	public async updatePasseadorByPk(
+		id: string,
+		nome: string,
+		email: string,
+		disponibilidade: string,
+		senha: string
+	) {
+		return Passeador.update(
+			{ nome, email, disponibilidade, senha },
+			{
+				where: { passeadorId: id },
+			}
+		);
+	}
+
 	public async removePasseadorByPk(id: string) {
 		return Passeador.destroy({
 			where: { passeadorId: id },
 			cascade: true,
 		});
 	}
-	public async getPasseadorByEmail(email:string){
+	public async getPasseadorByEmail(email: string) {
 		return Passeador.findOne({
-			where: {email:email},
-		})
+			where: { email: email },
+		});
 	}
 }
 

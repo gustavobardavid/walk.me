@@ -68,6 +68,35 @@ class AdestradorController {
 		}
 	}
 
+	public async updateAdestradorByPk(
+		req: Request,
+		res: Response
+	): Promise<void> {
+		// Validação do corpo da requisição
+		const parsed = createSchema.safeParse(req.body);
+		const id = req.params.id;
+		if (!parsed.success) {
+			res.status(StatusCodes.BAD_REQUEST).json(parsed.error.format());
+			return;
+		}
+
+		try {
+			const { nome, email, especialidade, senha } = parsed.data;
+			const Adestrador = await AdestradorService.updateAdestradorByPk(
+				id,
+				nome,
+				email,
+				especialidade,
+				senha
+			);
+			res.status(StatusCodes.CREATED).json(Adestrador);
+		} catch (error) {
+			res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+				message: 'Internal Server Error',
+			});
+		}
+	}
+
 	public async removeAdestradorByPk(
 		req: Request,
 		res: Response
